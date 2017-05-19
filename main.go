@@ -20,6 +20,8 @@ var routes = Routes{
 	Route{"TransListDebit", "GET", "/Transactions/Debit", TransListDebit},
 	Route{"TransListCredit", "GET", "/Transactions/Credit", TransListCredit},
 	Route{"BillList", "GET", "/Bills", BillsList},
+	Route{"AddMicro", "POST", "/Micro", PostMicro},
+	Route{"GetMicro", "GET", "/Micro", GetMicro},
 }
 
 var transactions = Transactions{
@@ -65,6 +67,13 @@ type Bill struct {
 
 type Bills []Bill
 
+type Micro struct {
+	Amount      string `json:"Amount"`
+	Beneficiary string `json:"Beneficiary"`
+}
+
+type Micros []Micro
+
 func NewRouter() *mux.Router {
 
 	router := mux.NewRouter().StrictSlash(true)
@@ -91,7 +100,7 @@ func main() {
 	router := NewRouter()
 	router.HandleFunc("/", logHandler(MessageHandler))
 	spew.Dump(router)
-	log.Fatal(http.ListenAndServe(":" + *httpPort, router))
+	log.Fatal(http.ListenAndServe(":"+*httpPort, router))
 
 }
 
