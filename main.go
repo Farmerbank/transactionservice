@@ -9,9 +9,10 @@ import (
 	"net/http/httputil"
 	"time"
 
+	"flag"
+
 	"github.com/davecgh/go-spew/spew"
 	"github.com/gorilla/mux"
-	"flag"
 )
 
 var routes = Routes{
@@ -72,7 +73,6 @@ func main() {
 
 	log.Println("Starting Farmerbank Transactionservice")
 	log.Printf("Service listening on %s", *httpPort)
-
 
 	router := NewRouter()
 	router.HandleFunc("/", logHandler(MessageHandler))
