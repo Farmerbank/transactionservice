@@ -36,7 +36,7 @@ var transactions = Transactions{
 
 var bills = Bills{
 	Bill{"$150", "Verizon", time.Date(2017, 11, 18, 20, 34, 58, 651387237, time.UTC)},
-	Bill{"$76", "Elictric co.", time.Date(2017, 11, 18, 20, 34, 58, 651387237, time.UTC)},
+	Bill{"$76", "Picachu electric company Inc.", time.Date(2017, 11, 18, 20, 34, 58, 651387237, time.UTC)},
 }
 
 type Route struct {
