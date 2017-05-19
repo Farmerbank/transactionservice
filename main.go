@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -15,6 +16,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+var micros = Micros
 var routes = Routes{
 	Route{"TransList", "GET", "/Transactions", TransList},
 	Route{"TransListDebit", "GET", "/Transactions/Debit", TransListDebit},
@@ -176,4 +178,32 @@ func MessageHandler(w http.ResponseWriter, r *http.Request) {
 
 func (t *Transactions) add(ta Transaction) {
 
+}
+
+func (m *Micros) add(mi Micro) {
+	micros := *m
+	micros = append(micros, mi)
+	*m = micros
+}
+
+func PostMicro(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var m Micro
+	b, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(b, &m)
+
+	micros.add(m)
+
+	j, _ := json.Marshal(m)
+	w.Write(j)
+
+}
+
+func GetMicro(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	if err := json.NewEncoder(w).Encode(micros); err != nil {
+		panic(err)
+	}
 }
