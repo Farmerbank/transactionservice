@@ -22,3 +22,10 @@ $ scp release/transactionservice-linux-amd64 ubuntu@farmerbank.nl:/srv/farmerban
 ```
 
 Optionally you can specify the server address using `$ ./transactionservice`
+
+
+### Start MongoDB on the server
+
+```
+$ docker run --name farmerbank -p 127.0.0.1:27017:27017 -v /srv/farmerbank-app/mongo-data:/data/db -d mongo
+```
