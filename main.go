@@ -16,9 +16,10 @@ import (
 )
 
 var routes = Routes{
-	Route{"List", "GET", "/Transactions", List},
-	Route{"ListDebit", "GET", "/Transactions/Debit", ListDebit},
-	Route{"ListCredit", "GET", "/Transactions/Credit", ListCredit},
+	Route{"TransList", "GET", "/Transactions", TransList},
+	Route{"TransListDebit", "GET", "/Transactions/Debit", TransListDebit},
+	Route{"TransListCredit", "GET", "/Transactions/Credit", TransListCredit},
+	Route{"BillList", "GET", "/Bills", BillsList},
 }
 
 var transactions = Transactions{
@@ -31,6 +32,11 @@ var transactions = Transactions{
 	Transaction{"Debit", "$70", "slagerij van kampen", time.Date(2017, 11, 19, 20, 34, 58, 651387237, time.UTC)},
 	Transaction{"Debit", "$55", "conrad.nl", time.Date(2017, 11, 19, 20, 34, 58, 651387237, time.UTC)},
 	Transaction{"Credit", "$4200", "Carebear Inc.", time.Date(2017, 11, 20, 20, 34, 58, 651387237, time.UTC)},
+}
+
+var bills = Bills{
+	Bill{"$150", "Verizon", time.Date(2017, 11, 18, 20, 34, 58, 651387237, time.UTC)},
+	Bill{"$76", "Elictric co.", time.Date(2017, 11, 18, 20, 34, 58, 651387237, time.UTC)},
 }
 
 type Route struct {
@@ -50,6 +56,14 @@ type Transaction struct {
 }
 
 type Transactions []Transaction
+
+type Bill struct {
+	Amount      string    `json:"Amount"`
+	Beneficiary string    `json:"Beneficiary"`
+	Due         time.Time `json:"Date"`
+}
+
+type Bills []Bill
 
 func NewRouter() *mux.Router {
 
@@ -81,7 +95,7 @@ func main() {
 
 }
 
-func List(w http.ResponseWriter, r *http.Request) {
+func TransList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
 	if err := json.NewEncoder(w).Encode(transactions); err != nil {
@@ -89,7 +103,7 @@ func List(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func ListDebit(w http.ResponseWriter, r *http.Request) {
+func TransListDebit(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
 	if err := json.NewEncoder(w).Encode(transactions.getDebit()); err != nil {
@@ -97,10 +111,18 @@ func ListDebit(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func ListCredit(w http.ResponseWriter, r *http.Request) {
+func TransListCredit(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
 	if err := json.NewEncoder(w).Encode(transactions.getCredit()); err != nil {
+		panic(err)
+	}
+}
+
+func BillsList(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	if err := json.NewEncoder(w).Encode(bills); err != nil {
 		panic(err)
 	}
 }
