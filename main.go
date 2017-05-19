@@ -91,7 +91,7 @@ func main() {
 	router := NewRouter()
 	router.HandleFunc("/", logHandler(MessageHandler))
 	spew.Dump(router)
-	log.Fatal(http.ListenAndServe(":3000", router))
+	log.Fatal(http.ListenAndServe(":" + *httpPort, router))
 
 }
 
