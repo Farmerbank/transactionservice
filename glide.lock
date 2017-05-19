@@ -1,0 +1,12 @@
+hash: fea11863d597a12357f9875ee2c3e04b7bf0ad7049e750e448a51e26be4fc3b1
+updated: 2017-05-19T09:45:04.488516965+02:00
+imports:
+- name: github.com/davecgh/go-spew
+  version: 346938d642f2ec3594ed81d874461961cd0faa76
+  subpackages:
+  - spew
+- name: github.com/gorilla/context
+  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
+- name: github.com/gorilla/mux
+  version: 4c1c3952b7d9d0a061a3fa7b36fd373ba0398ebc
+testImports: []
