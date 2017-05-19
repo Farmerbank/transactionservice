@@ -15,6 +15,8 @@ import (
 
 var routes = Routes{
 	Route{"List", "GET", "/Transactions", List},
+	Route{"ListDebit", "GET", "/Transactions/Debit", ListDebit},
+	Route{"ListCredit", "GET", "/Transactions/Credit", ListDebit},
 }
 
 var transactions = Transactions{
@@ -77,6 +79,42 @@ func List(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func ListDebit(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	if err := json.NewEncoder(w).Encode(transactions.getDebit()); err != nil {
+		panic(err)
+	}
+}
+
+func ListCredit(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	if err := json.NewEncoder(w).Encode(transactions.getCredit()); err != nil {
+		panic(err)
+	}
+}
+
+func (t Transactions) getDebit() Transactions {
+	trans := make(Transactions, 0)
+	for _, tt := range t {
+		if tt.Type == "Debit" {
+			trans = append(trans, tt)
+		}
+	}
+	return trans
+}
+
+func (t Transactions) getCredit() Transactions {
+	trans := make(Transactions, 0)
+	for _, tt := range t {
+		if tt.Type == "Credit" {
+			trans = append(trans, tt)
+		}
+	}
+	return trans
+}
+
 func logHandler(fn http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		x, err := httputil.DumpRequest(r, true)
@@ -93,4 +131,8 @@ func logHandler(fn http.HandlerFunc) http.HandlerFunc {
 
 func MessageHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "A message was received")
+}
+
+func (t *Transactions) add(ta Transaction) {
+
 }
