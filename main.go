@@ -16,7 +16,7 @@ import (
 var routes = Routes{
 	Route{"List", "GET", "/Transactions", List},
 	Route{"ListDebit", "GET", "/Transactions/Debit", ListDebit},
-	Route{"ListCredit", "GET", "/Transactions/Credit", ListDebit},
+	Route{"ListCredit", "GET", "/Transactions/Credit", ListCredit},
 }
 
 var transactions = Transactions{
