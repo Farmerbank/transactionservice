@@ -11,6 +11,7 @@ import (
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/gorilla/mux"
+	"flag"
 )
 
 var routes = Routes{
@@ -64,6 +65,15 @@ func NewRouter() *mux.Router {
 }
 
 func main() {
+	var (
+		httpPort = flag.String("port", "3000", "HTTP server port")
+	)
+	flag.Parse()
+
+	log.Println("Starting Farmerbank Transactionservice")
+	log.Printf("Service listening on %s", *httpPort)
+
+
 	router := NewRouter()
 	router.HandleFunc("/", logHandler(MessageHandler))
 	spew.Dump(router)
