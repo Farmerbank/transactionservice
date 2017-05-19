@@ -12,7 +12,7 @@ release:
 	# GOOS=linux GOARCH=386 go build -o release/transactionservice-linux-386 $(package)
 	# GOOS=windows GOARCH=amd64 go build -o release/transactionservice-windows-amd64.exe $(package)
 	# GOOS=windows GOARCH=386 go build -o release/transactionservice-windows-386.exe $(package)
-	GOOS=darwin GOARCH=amd64 go build -o release/transactionservice-osx-amd64 $(package)
+	# GOOS=darwin GOARCH=amd64 go build -o release/transactionservice-osx-amd64 $(package)
 test:
 	go test -v
 
